@@ -16,7 +16,7 @@
     "example:mcp": "node examples/demo-mcp.js",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
-    "prepublishOnly": "npm run build && npm run test",
+    "prepublishOnly": "npm run build && vitest run",
     "prepare": "npm run build"
   },
   "keywords": [

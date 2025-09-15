@@ -77,7 +77,21 @@ describe('Config', () => {
   });
 
   it('should validate required configuration', () => {
-    const config = new Config();
+    // Create a config with explicitly empty API keys to override any loaded from environment
+    const config = new Config({
+      openaiApiKey: '',
+      anthropicApiKey: '',
+      googleApiKey: '',
+      groqApiKey: '',
+      perplexityApiKey: '',
+      togetherApiKey: '',
+      cohereApiKey: '',
+      tavilyApiKey: '',
+      serperApiKey: '',
+      serpapiApiKey: '',
+      googleCx: '',
+      bingApiKey: ''
+    });
     
     // Should throw error when no API keys are set
     expect(() => config.validateRequired()).toThrow();
