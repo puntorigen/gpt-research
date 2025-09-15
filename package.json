@@ -1,0 +1,91 @@
+{
+  "name": "gpt-research",
+  "version": "1.0.0",
+  "description": "Autonomous AI research agent that conducts comprehensive research on any topic and generates detailed reports with citations",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "example": "tsx examples/example.ts",
+    "example:simple": "node examples/demo-openai-only.js",
+    "example:tavily": "node examples/demo-tavily-research.js",
+    "example:serper": "node examples/demo-serper-research.js",
+    "example:mcp": "node examples/demo-mcp.js",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "npm run build && npm run test",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "gpt",
+    "researcher",
+    "autonomous",
+    "agent",
+    "research",
+    "llm",
+    "ai",
+    "openai",
+    "tavily",
+    "web-scraping",
+    "report-generation",
+    "artificial-intelligence",
+    "machine-learning",
+    "nlp",
+    "natural-language-processing"
+  ],
+  "author": "Pablo Schaffner",
+  "license": "MIT",
+  "homepage": "https://github.com/assafelovic/gpt-researcher",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assafelovic/gpt-researcher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/assafelovic/gpt-researcher/issues"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "openai": "^4.0.0",
+    "@anthropic-ai/sdk": "^0.10.0",
+    "@google/generative-ai": "^0.2.0",
+    "groq-sdk": "^0.3.0",
+    "ollama": "^0.5.0",
+    "cohere-ai": "^6.0.0",
+    "@googleapis/customsearch": "^3.0.0",
+    "duck-duck-scrape": "^2.2.5",
+    "puppeteer-core": "^21.0.0",
+    "@sparticuz/chromium": "^119.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "@mozilla/readability": "^0.4.4",
+    "jsdom": "^23.0.0",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "axios": "^1.6.0",
+    "nunjucks": "^3.2.4",
+    "zod": "^3.22.0",
+    "cli-progress": "^3.12.0",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "tsx": "^4.6.0",
+    "vitest": "^1.1.0",
+    "@types/node": "^20.10.0",
+    "@types/cheerio": "^0.22.35",
+    "@types/jsdom": "^21.1.6",
+    "@types/nunjucks": "^3.2.6",
+    "@types/pdf-parse": "^1.1.4",
+    "@types/cli-progress": "^3.11.5",
+    "@types/ws": "^8.5.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

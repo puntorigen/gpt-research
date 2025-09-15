@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Research - Client Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .progress {
+            background: #f5f5f5;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .progress.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .output h1, .output h2, .output h3 {
+            color: #333;
+            margin: 20px 0 10px 0;
+        }
+        
+        .output h1 { font-size: 1.8em; }
+        .output h2 { font-size: 1.5em; }
+        .output h3 { font-size: 1.2em; }
+        
+        .output p {
+            margin-bottom: 10px;
+        }
+        
+        .output a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .output a:hover {
+            text-decoration: underline;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c00;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 GPT Research</h1>
+            <p>Node.js Client Example</p>
+        </div>
+        
+        <div class="content">
+            <div class="form-group">
+                <label for="query">Research Query</label>
+                <textarea id="query" placeholder="Enter your research topic or question...">What are the latest developments in quantum computing?</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="apiUrl">API URL</label>
+                <input type="text" id="apiUrl" value="http://localhost:3000/api/research" placeholder="http://localhost:3000/api/research">
+            </div>
+            
+            <div class="form-group">
+                <label for="reportType">Report Type</label>
+                <select id="reportType">
+                    <option value="research_report">Research Report</option>
+                    <option value="detailed_report">Detailed Report</option>
+                    <option value="quick_summary">Quick Summary</option>
+                    <option value="resource_report">Resource Report</option>
+                    <option value="outline_report">Outline Report</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tone">Tone</label>
+                <select id="tone">
+                    <option value="objective">Objective</option>
+                    <option value="formal">Formal</option>
+                    <option value="academic">Academic</option>
+                    <option value="casual">Casual</option>
+                    <option value="analytical">Analytical</option>
+                    <option value="informative">Informative</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="conductResearch()">🚀 Conduct Research</button>
+                <button onclick="streamResearch()">📡 Stream Research</button>
+            </div>
+            
+            <div id="progress" class="progress">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <div id="progressText" class="progress-text">Initializing...</div>
+            </div>
+            
+            <div id="error" class="error" style="display: none;"></div>
+            
+            <div id="output" class="output">
+                Results will appear here...
+            </div>
+            
+            <div id="stats" class="stats" style="display: none;">
+                <div class="stat-card">
+                    <div id="sourcesCount" class="stat-value">0</div>
+                    <div class="stat-label">Sources</div>
+                </div>
+                <div class="stat-card">
+                    <div id="tokensUsed" class="stat-value">0</div>
+                    <div class="stat-label">Tokens</div>
+                </div>
+                <div class="stat-card">
+                    <div id="totalCost" class="stat-value">$0.00</div>
+                    <div class="stat-label">Cost</div>
+                </div>
+                <div class="stat-card">
+                    <div id="duration" class="stat-value">0s</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let eventSource = null;
+        
+        function showError(message) {
+            const errorEl = document.getElementById('error');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            setTimeout(() => {
+                errorEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showProgress(show = true) {
+            const progressEl = document.getElementById('progress');
+            progressEl.classList.toggle('active', show);
+        }
+        
+        function updateProgress(percentage, text) {
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+        
+        function formatMarkdown(text) {
+            // Very basic markdown formatting
+            return text
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/\*\*(.*)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*)\*/g, '<em>$1</em>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                .replace(/\n/g, '<br>');
+        }
+        
+        async function conductResearch() {
+            const query = document.getElementById('query').value;
+            const apiUrl = document.getElementById('apiUrl').value;
+            const reportType = document.getElementById('reportType').value;
+            const tone = document.getElementById('tone').value;
+            
+            if (!query) {
+                showError('Please enter a research query');
+                return;
+            }
+            
+            showProgress(true);
+            updateProgress(0, 'Starting research...');
+            document.getElementById('output').innerHTML = 'Processing...';
+            document.getElementById('stats').style.display = 'none';
+            
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query,
+                        reportType,
+                        tone,
+                        maxSearchResults: 10,
+                        maxSubtopics: 3
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Research failed');
+                }
+                
+                const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+                
+                // Display report
+                document.getElementById('output').innerHTML = formatMarkdown(data.data.report);
+                
+                // Display stats
+                document.getElementById('stats').style.display = 'grid';
+                document.getElementById('sourcesCount').textContent = data.data.sources?.length || 0;
+                document.getElementById('tokensUsed').textContent = data.data.metadata?.tokensUsed || 0;
+                document.getElementById('totalCost').textContent = '$' + (data.data.costs?.total || 0).toFixed(4);
+                document.getElementById('duration').textContent = duration + 's';
+                
+                showProgress(false);
+                
+            } catch (error) {
+                showError('Error: ' + error.message);
+                showProgress(false);
+                document.getElementById('output').textContent = 'Failed to conduct research';
+            }
+        }
+        
+        async function streamResearch() {
+            const query = document.getElementById('query').value;
+            const apiUrl = document.getElementById('apiUrl').value.replace('/research', '/research/stream');
+            const reportType = document.getElementById('reportType').value;
+            const tone = document.getElementById('tone').value;
+            
+            if (!query) {
+                showError('Please enter a research query');
+                return;
+            }
+            
+            // Close existing connection if any
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            showProgress(true);
+            updateProgress(0, 'Connecting...');
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('stats').style.display = 'none';
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query,
+                        reportType,
+                        tone,
+                        maxSearchResults: 10,
+                        maxSubtopics: 3
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to start stream');
+                }
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                let reportContent = '';
+                
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop() || '';
+                    
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const data = line.slice(6);
+                            
+                            if (data === '[DONE]') {
+                                showProgress(false);
+                                continue;
+                            }
+                            
+                            try {
+                                const update = JSON.parse(data);
+                                
+                                switch (update.type) {
+                                    case 'progress':
+                                        updateProgress(update.progress || 0, update.message || '');
+                                        break;
+                                    
+                                    case 'data':
+                                        if (update.data?.reportChunk) {
+                                            reportContent += update.data.reportChunk;
+                                            document.getElementById('output').innerHTML = formatMarkdown(reportContent);
+                                        }
+                                        if (update.data?.sources) {
+                                            document.getElementById('stats').style.display = 'grid';
+                                            document.getElementById('sourcesCount').textContent = update.data.sources;
+                                        }
+                                        break;
+                                    
+                                    case 'complete':
+                                        showProgress(false);
+                                        if (update.data?.report) {
+                                            document.getElementById('output').innerHTML = formatMarkdown(update.data.report);
+                                        }
+                                        break;
+                                    
+                                    case 'error':
+                                        showError(update.message || 'Stream error');
+                                        showProgress(false);
+                                        break;
+                                }
+                            } catch (e) {
+                                console.error('Failed to parse update:', e);
+                            }
+                        }
+                    }
+                }
+                
+            } catch (error) {
+                showError('Stream error: ' + error.message);
+                showProgress(false);
+                document.getElementById('output').textContent = 'Failed to stream research';
+            }
+        }
+    </script>
+</body>
+</html>

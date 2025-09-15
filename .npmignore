@@ -1,0 +1,81 @@
+# Source files (only distribute compiled JS)
+src/
+
+# Test files
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Examples and demos
+examples/
+demo-*.js
+
+# Development files
+.env
+.env.*
+!env.example
+
+# Configuration files
+.eslintrc.json
+.prettierrc
+vitest.config.ts
+tsconfig.json
+
+# API routes (for Vercel deployment)
+api/
+
+# Vercel
+.vercel
+vercel.json
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Documentation source
+docs/
+*.md
+!README.md
+
+# Build artifacts that shouldn't be published
+*.tsbuildinfo
+.cache/
+
+# Package manager files
+yarn.lock
+pnpm-lock.yaml
+.pnpm-debug.log*
+
+# Keep only essential files
+# The published package will include:
+# - dist/ (compiled JS)
+# - package.json
+# - README.md
+# - LICENSE (if exists)
+# - env.example
