@@ -38,13 +38,13 @@
   ],
   "author": "Pablo Schaffner",
   "license": "MIT",
-  "homepage": "https://github.com/assafelovic/gpt-researcher",
+  "homepage": "https://github.com/puntorigen/gpt-research",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/assafelovic/gpt-researcher.git"
+    "url": "git+https://github.com/puntorigen/gpt-research.git"
   },
   "bugs": {
-    "url": "https://github.com/assafelovic/gpt-researcher/issues"
+    "url": "https://github.com/puntorigen/gpt-research/issues"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
