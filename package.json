@@ -1,6 +1,6 @@
 {
   "name": "gpt-research",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Autonomous AI research agent that conducts comprehensive research on any topic and generates detailed reports with citations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
