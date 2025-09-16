@@ -409,8 +409,6 @@ Check the `examples/` directory for more detailed usage examples.
 - **Technical Documentation**: Research technical topics and generate comprehensive guides
 - **Due Diligence**: Conduct thorough research on companies, people, or topics
 - **News Aggregation**: Gather and summarize news from multiple sources
-└── example.ts             # Usage examples
-```
 
 ## 🤝 Contributing
 
@@ -437,13 +435,10 @@ MIT License - see LICENSE file for details.
 
 ## 🎯 Roadmap
 
-- [ ] Add more LLM providers (Cohere, Together AI)
-- [ ] Implement vector store for semantic search
-- [ ] Add PDF and DOCX report export
-- [ ] Create browser extension
 - [ ] Add multi-language support
+- [ ] Add more LLM providers (Cohere, Together AI)
 - [ ] Implement research templates
-- [ ] Add collaborative research features
+- [ ] Add PDF and DOCX report export
 
 ## 💡 Tips
 
